@@ -89,7 +89,6 @@ const config: (t: ContextApi['t'], isDark: boolean, languageCode?: string, chain
           {
             label: t('Pools'),
             href: '/pools',
-            supportChainIds: SUPPORT_ONLY_BSC,
           },
         ].map((item) => addMenuItemSupported(item, chainId)),
       },
