@@ -35,7 +35,7 @@ const _binanceChainListener = async () =>
 export class BinanceWalletConnector extends InjectedConnector {
   readonly id = 'bsc'
 
-  readonly ready = typeof window !== 'undefined' && !!window.BinanceChain
+  readonly ready = typeof window !== 'undefined'
 
   provider?: Window['BinanceChain']
 
@@ -57,10 +57,8 @@ export class BinanceWalletConnector extends InjectedConnector {
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
-    console.log('chainId', { chainId })
     try {
       const provider = await this.getProvider()
-      console.log({ provider })
       if (!provider) throw new ConnectorNotFoundError()
 
       if (provider.on) {
