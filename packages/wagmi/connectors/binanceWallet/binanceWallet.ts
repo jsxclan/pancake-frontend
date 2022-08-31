@@ -32,7 +32,7 @@ export class BinanceWalletConnector extends InjectedConnector {
   } = {}) {
     const options = {
       name: 'Binance',
-      shimDisconnect: true,
+      shimDisconnect: false,
       shimChainChangedDisconnect: true,
     }
     const chains = _chains?.filter((c) => !!mappingNetwork[c.id])
