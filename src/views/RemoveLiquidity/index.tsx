@@ -149,6 +149,7 @@ export default function RemoveLiquidity() {
   const atMaxAmount = parsedAmounts[Field.LIQUIDITY_PERCENT]?.equalTo(new Percent('1'))
 
   // pair contract
+  const pairContractRead: Contract | null = usePairContract(pair?.liquidityToken?.address, false)
   const pairContract: Contract | null = usePairContract(pair?.liquidityToken?.address)
 
   // allowance handling
@@ -159,7 +160,7 @@ export default function RemoveLiquidity() {
   )
 
   async function onAttemptToApprove() {
-    if (!pairContract || !pair || !library || !deadline) throw new Error('missing dependencies')
+    if (!pairContract || !pairContractRead || !pair || !library || !deadline) throw new Error('missing dependencies')
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
     if (!liquidityAmount) {
       toastError(t('Error'), t('Missing liquidity amount'))
@@ -167,7 +168,7 @@ export default function RemoveLiquidity() {
     }
 
     // try to gather a signature for permission
-    const nonce = await pairContract.nonces(account)
+    const nonce = await pairContractRead.nonces(account)
 
     const EIP712Domain = [
       { name: 'name', type: 'string' },
